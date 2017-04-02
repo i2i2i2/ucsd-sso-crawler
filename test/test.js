@@ -7,4 +7,4 @@ Scrapper.getFullReport(
   function() {
     console.log('success');
   }
-)
+);
