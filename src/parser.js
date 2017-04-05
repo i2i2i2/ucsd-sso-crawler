@@ -4,6 +4,11 @@ const Promise = require('bluebird');
 const Helper = require('./helper')('Parser');
 const cheerio = require('cheerio')
 
+/**
+ * parse academic history
+ * @param phantom, object includes AcademicHistory fields to parseAcademicHistory
+ * @return promise phantom contains parsed JSON.
+ */
 exports.parseAcademicHistory = function(phantom) {
 
   return new Promise((resolve, reject) => {
@@ -27,12 +32,12 @@ exports.parseAcademicHistory = function(phantom) {
     let gradeOptions = [null, 'letter', 'pnp', 'all'];
     let creditFields = [null, 'attendCredit', 'passedCredit', 'gpaCredit', 'sumGPA', 'avgGPA'];
 
-    $('#gradeOption').children('tr').each(function(index, row) {
+    $('#gradeOption').find('tr').each(function(index, row) {
 
       if (!gradeOptions[index])
         return true;
 
-      let option = parsed.gradeOptions[index] = {};
+      let option = parsed.gradeOptions[gradeOptions[index]] = {};
       $(row).children('td').each(function(index, col) {
 
         if (!creditFields[index])
@@ -122,22 +127,51 @@ exports.parseAcademicHistory = function(phantom) {
   });
 }
 
+/**
+ * parse degree audit to find out stll required course. TODO: To irregular
+ * @param phantom, object includes DegreeAudit field to parseAcademicHistory
+ * @return promise phantom contains parsed JSON.
+ */
 exports.parseDegreeAudit = function(phantom) {
 
   return new Promise((resolve, reject) => {
 
-    Helper.log("get DegreeAudit Report");
+    // TODO: parse required but completed classes in DegreeAudit report
+    if (phantom.report) {
+      phantom.report.degreeAudit = phantom.DegreeAudit;
+
+    } else {
+      phantom.report = {
+        degreeAudit: phantom.DegreeAudit
+      };
+    }
+
     resolve(phantom);
   });
 }
 
-exports.parseResult = function(onSuccess) {
+/**
+ * turn onSuccess to promise
+ * @param onSuccess, success callback, takes on arg the parsed academic history JSON
+ * @param raw, if you want raw html
+ * @return function that return promise, inside promise success back is called
+ */
+exports.parseResult = function(onSuccess, raw) {
 
   return function(phantom) {
 
     return new Promise((resolve, reject) => {
 
-      console.log("You should get Both");
+      if (raw) {
+        onSuccess({
+          academicHistory: phantom.AcademicHistory,
+          degreeAudit: phantom.DegreeAudit
+        });
+
+      } else {
+        onSuccess(phantom.report);
+      }
+
       resolve(phantom);
     });
   };

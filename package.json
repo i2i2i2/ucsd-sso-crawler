@@ -1,0 +1,24 @@
+{
+  "name": "ucsd-sso-crawler",
+  "version": "1.0.0",
+  "decription": "A stupid way to crawl into ucsd sso to get academic history",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/i2i2i2/ucsd-sso-crawler.git"
+  },
+  "main": "src/index",
+  "dependencies": {
+    "bluebird": "~3.5.0",
+    "debug": "~2.6.3",
+    "cheerio": "~0.22.0",
+    "node-phantom-simple": "~2.14.12"
+  },
+  "keywords": [
+    "ucsd",
+    "sso",
+    "academic history",
+    "crawler"
+  ],
+  "author": "Chenxu Jiang <chj028@ucsd.edu>",
+  "license": "MIT"
+}

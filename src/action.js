@@ -43,7 +43,7 @@ var Action = function(username, password) {
   this.pages = null;
   this.username = username;
   this.password = password;
-  this.helper = new Helper('Scrapper ' + username);
+  this.helper = new Helper('Crawler ' + username);
 }
 
 /**

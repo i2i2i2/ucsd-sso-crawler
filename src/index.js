@@ -72,6 +72,7 @@ function getAcademicHistory(onErr) {
  * @param password
  * @param onErr, error callback take single error reason string
  * @param onSuccess, success callback take no argument, run after success login;
+ * @param raw, if you want the raw html content
  */
 exports.authenticateUser = function(username, password, onError, onSuccess) {
 
@@ -91,7 +92,7 @@ exports.authenticateUser = function(username, password, onError, onSuccess) {
  * @param onErr, error callback take single error reason string
  * @param onSuccess, success callback, take single object contain academic history
  */
-exports.getAcademicHistory = function(username, password, onError, onSuccess) {
+exports.getAcademicHistory = function(username, password, onError, onSuccess, raw) {
 
   let onErr = convertToRejection(onError);
   let action = new Action(username, password);
@@ -99,7 +100,8 @@ exports.getAcademicHistory = function(username, password, onError, onSuccess) {
   loginCheck(action, onErr)
     .then(getAcademicHistory(onErr))
     .then(action.killPhantom.bind(action), onErr)
-    .then(Parser.parseResult(onSuccess), onErr)
+    .then(Parser.parseAcademicHistory, onErr)
+    .then(Parser.parseResult(onSuccess, raw), onErr)
     .catch(nop);
 };
 
@@ -109,8 +111,9 @@ exports.getAcademicHistory = function(username, password, onError, onSuccess) {
  * @param password
  * @param onErr, error callback take single error reason string
  * @param onSuccess, success callback, take single object contain academic history
+ * @param raw, if you want the raw html content
  */
-exports.getFullReport = function(username, password, onError, onSuccess) {
+exports.getFullReport = function(username, password, onError, onSuccess, raw) {
 
   let onErr = convertToRejection(onError);
   let action = new Action(username, password);
@@ -119,6 +122,8 @@ exports.getFullReport = function(username, password, onError, onSuccess) {
     .then(getAcademicHistory(onErr), onErr)
     .then(getDegreeAuditReport(onErr), onErr)
     .then(action.killPhantom.bind(action), onErr)
-    .then(Parser.parseResult(onSuccess), onErr)
+    .then(Parser.parseAcademicHistory, onErr)
+    .then(Parser.parseDegreeAudit, onErr)
+    .then(Parser.parseResult(onSuccess, raw), onErr)
     .catch(nop);
 }

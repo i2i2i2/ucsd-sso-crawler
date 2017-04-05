@@ -1,6 +1,7 @@
 'use strict';
 
 const debug = require('debug');
+
 const RED = "\x1b[31m";
 const GREEN = "\x1b[32m";
 const BLUE = "\x1b[34m";
@@ -16,7 +17,7 @@ function Helper(name) {
     return new Helper();
 
   this.taskList = {};
-  this.debug = debug(name? name : 'Scrapper');
+  this.debug = debug(name? name : 'Crawler');
 }
 
 /**
