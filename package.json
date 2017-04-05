@@ -11,7 +11,7 @@
     "bluebird": "~3.5.0",
     "debug": "~2.6.3",
     "cheerio": "~0.22.0",
-    "node-phantom-simple": "~2.14.12"
+    "node-phantom-simple": "~2.2.4"
   },
   "keywords": [
     "ucsd",
