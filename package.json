@@ -1,6 +1,6 @@
 {
   "name": "ucsd-sso-crawler",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "decription": "A stupid way to crawl into ucsd sso to get academic history",
   "repository": {
     "type": "git",

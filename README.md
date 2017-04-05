@@ -14,7 +14,7 @@ I would really appreciate if someone could tell me the way to login to UCSD stud
 // or run `DEBUG=* node index` to enable debug print
 // process.env.DEBUG = '*';
 
-var crawler = require("../ucsdAcademicHistory/src/index");
+var crawler = require("ucsd-sso-crawler");
 
 crawler.authenticateUser(
     "username",
@@ -36,7 +36,7 @@ crawler.authenticateUser(
 // or run `DEBUG=* node index` to enable debug print
 // process.env.DEBUG = '*';
 
-var crawler = require("../ucsdAcademicHistory/src/index");
+var crawler = require("ucsd-sso-crawler");
 
 crawler.getAcademicHistory(
     "username",
